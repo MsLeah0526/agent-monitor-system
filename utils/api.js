@@ -49,13 +49,13 @@ const mockAgents = [
   {
     id: 'agent-005',
     name: 'PMAgent',
-    status: 'offline',
-    cpuUsage: 0,
-    memoryUsage: 0,
-    successRate: 0,
-    requestsPerMinute: 0,
-    uptime: 'N/A',
-    lastUpdate: '1小时前'
+    status: 'online',
+    cpuUsage: Math.floor(Math.random() * 40) + 25,
+    memoryUsage: Math.floor(Math.random() * 50) + 20,
+    successRate: Math.floor(Math.random() * 10) + 90,
+    requestsPerMinute: Math.floor(Math.random() * 150) + 40,
+    uptime: '4天12小时',
+    lastUpdate: '刚刚'
   }
 ];
 

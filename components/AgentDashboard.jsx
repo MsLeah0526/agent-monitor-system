@@ -75,7 +75,7 @@ const AgentDashboard = () => {
         </div>
         <div className="stat-card success">
           <div className="stat-number">{successRate}%</div>
-          <div className="stat-label">成功率 > 90%</div>
+          <div className="stat-label">成功率 &gt; 90%</div>
         </div>
         <div className="stat-card">
           <div className="stat-number">{agents.reduce((sum, agent) => sum + agent.requestsPerMinute, 0)}</div>

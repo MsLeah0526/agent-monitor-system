@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "node backend/server.mjs",
+    "init-db": "node backend/init-database.mjs",
+    "seed-db": "node backend/seed/agents.mjs",
+    "sync-agents": "node backend/syncAgents.mjs sync",
+    "sync-daemon": "node backend/syncAgents.mjs daemon"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +20,11 @@
   "type": "module",
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.4",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
     "echarts": "^6.0.0",
+    "express": "^5.2.1",
+    "mysql2": "^3.19.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-echarts": "^0.1.1",

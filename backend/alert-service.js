@@ -3,9 +3,9 @@
  * Handles alert detection and multi-channel notifications
  */
 
-const FeishuNotifier = require('./notifiers/feishu-notifier.js');
-const EmailNotifier = require('./notifiers/email-notifier.js');
-const DingTalkNotifier = require('./notifiers/dingtalk-notifier.js');
+import FeishuNotifier from './notifiers/feishu-notifier.js';
+import EmailNotifier from './notifiers/email-notifier.js';
+import DingTalkNotifier from './notifiers/dingtalk-notifier.js';
 
 class AlertService {
   constructor() {
@@ -128,4 +128,4 @@ class AlertService {
   }
 }
 
-module.exports = AlertService;
+export default AlertService;

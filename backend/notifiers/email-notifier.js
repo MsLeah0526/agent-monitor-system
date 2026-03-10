@@ -3,7 +3,7 @@
  * Sends alerts via email using SMTP
  */
 
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 class EmailNotifier {
   constructor() {
@@ -128,4 +128,4 @@ class EmailNotifier {
   }
 }
 
-module.exports = EmailNotifier;
+export default EmailNotifier;

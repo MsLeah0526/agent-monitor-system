@@ -3,7 +3,7 @@
  * Sends alerts to Feishu via webhook or API
  */
 
-const axios = require('axios');
+import axios from 'axios';
 
 class FeishuNotifier {
   constructor() {
@@ -84,7 +84,7 @@ class FeishuNotifier {
         msg_type: 'text',
         content: {
           text: `${message.title}\n\n${message.content}`
-        }
+      }
       },
       {
         headers: {
@@ -123,4 +123,4 @@ class FeishuNotifier {
   }
 }
 
-module.exports = FeishuNotifier;
+export default FeishuNotifier;

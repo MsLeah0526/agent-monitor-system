@@ -3,8 +3,10 @@
  * Starts the WebSocket server with all services
  */
 
-require('dotenv').config();
-const WebSocketServer = require('./websocket-server.js');
+import dotenv from 'dotenv';
+import WebSocketServer from './websocket-server.js';
+
+dotenv.config();
 
 const PORT = process.env.WS_PORT || 8080;
 

@@ -3,7 +3,8 @@
  * Sends alerts to DingTalk via webhook
  */
 
-const axios = require('axios');
+import axios from 'axios';
+import crypto from 'crypto';
 
 class DingTalkNotifier {
   constructor() {
@@ -55,7 +56,6 @@ ${message.content.replace(/\n/g, '\n\n')}
   }
 
   signWebhook() {
-    const crypto = require('crypto');
     const timestamp = Date.now();
     const stringToSign = `${timestamp}\n${this.secret}`;
     const sign = crypto
@@ -68,4 +68,4 @@ ${message.content.replace(/\n/g, '\n\n')}
   }
 }
 
-module.exports = DingTalkNotifier;
+export default DingTalkNotifier;

@@ -3,11 +3,11 @@
  * Handles real-time connections, heartbeat, and data synchronization
  */
 
-const WebSocket = require('ws');
-const http = require('http');
-const AgentManager = require('./agent-manager.js');
-const AlertService = require('./alert-service.js');
-const DataSync = require('./data-sync.js');
+import WebSocket from 'ws';
+import http from 'http';
+import AgentManager from './agent-manager.js';
+import AlertService from './alert-service.js';
+import DataSync from './data-sync.js';
 
 class WebSocketServer {
   constructor(port = 8080) {
@@ -261,7 +261,7 @@ class WebSocketServer {
       // Broadcast agent offline
       this.broadcast({
         type: 'agent_offline',
-        agentId: client.agentIdId,
+        agentId: client.agentId,
         timestamp: Date.now()
       });
     }
@@ -346,4 +346,4 @@ class WebSocketServer {
   }
 }
 
-module.exports = WebSocketServer;
+export default WebSocketServer;

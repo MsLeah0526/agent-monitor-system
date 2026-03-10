@@ -3,7 +3,7 @@
  * Handles real-time connections, heartbeat, and data synchronization
  */
 
-import WebSocket from 'ws';
+import { WebSocketServer as WSServer } from 'ws';
 import http from 'http';
 import AgentManager from './agent-manager.js';
 import AlertService from './alert-service.js';
@@ -35,7 +35,7 @@ class WebSocketServer {
     });
 
     // Create WebSocket server
-    this.wss = new WebSocket.Server({ server: this.server });
+    this.wss = new WSServer({ server: this.server });
 
     this.wss.on('connection', (ws, req) => {
       this.handleConnection(ws, req);

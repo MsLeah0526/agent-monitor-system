@@ -172,7 +172,7 @@ const Reports: React.FC = () => {
                   <Option value="pm-agent">小红</Option>
                   <Option value="data-agent">小李子</Option>
                 </Select>
-              </Form.Item.Item>
+              </Form.Item>
             </Col>
             <Col xs={24} sm={12} md={4}>
               <Form.Item label="操作">

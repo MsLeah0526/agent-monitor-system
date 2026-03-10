@@ -9,6 +9,13 @@ import agentsDetailRouter from './routes/agents-detail.mjs';
 import tasksRouter from './routes/tasks.mjs';
 import invocationsRouter from './routes/invocations.mjs';
 import communicationsRouter from './routes/communications.mjs';
+import teamRouter from './routes/team.mjs';
+import alertsRouter from './routes/alerts.mjs';
+import reportsRouter from './routes/reports.mjs';
+import authRouter from './routes/auth.mjs';
+
+// 导入中间件
+import { authMiddleware, optionalAuthMiddleware } from './middleware/auth.mjs';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -18,7 +25,7 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// 健康检查
+// 健康检查（公开）
 app.get('/health', (req, res) => {
   res.json({
     success: true,
@@ -28,12 +35,18 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API路由 - 注意：更具体的路由要放在前面
-app.use('/api/agents', agentsDetailRouter);
-app.use('/api/agents', agentsRouter);
-app.use('/api/tasks', tasksRouter);
-app.use('/api/invocations', invocationsRouter);
-app.use('/api/communications', communicationsRouter);
+// 公开API路由（不需要认证）
+app.use('/api/auth', authRouter);
+
+// 需要认证的API路由
+app.use('/api/agents', authMiddleware, agentsDetailRouter);
+app.use('/api/agents', authMiddleware, agentsRouter);
+app.use('/api/tasks', authMiddleware, tasksRouter);
+app.use('/api/invocations', authMiddleware, invocationsRouter);
+app.use('/api/communications', authMiddleware, communicationsRouter);
+app.use('/api/team', authMiddleware, teamRouter);
+app.use('/api/alerts', authMiddleware, alertsRouter);
+app.use('/api/reports', authMiddleware, reportsRouter);
 
 // 根路由
 app.get('/', (req, res) => {

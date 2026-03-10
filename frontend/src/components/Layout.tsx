@@ -1,6 +1,6 @@
 // 布局组件
 import React from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme, Dropdown, Avatar, Space } from 'antd';
 import {
   DashboardOutlined,
   UserOutlined,
@@ -8,8 +8,12 @@ import {
   SettingOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  BellOutlined,
+  LogoutOutlined,
+  BellFilled,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getCurrentUser, logout } from '../services/auth';
 
 const { Header, Sider, Content } = Layout;
 
@@ -20,6 +24,8 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const currentUser = getCurrentUser();
 
   const menuItems = [
     {
@@ -38,6 +44,16 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       label: '报表',
     },
     {
+      key: '/alerts',
+      icon: <BellOutlined />,
+      label: '告警',
+    },
+    {
+      key: '/alert-rules',
+      icon: <BellFilled />,
+      label: '告警规则',
+    },
+    {
       key: '/settings',
       icon: <SettingOutlined />,
       label: '设置',
@@ -51,6 +67,19 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       navigate(key);
     }
   };
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const userMenuItems = [
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: '退出登录',
+      onClick: handleLogout,
+    },
+  ];
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -87,18 +116,24 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', alignItems: 'center' }}>
+        <Header style={{ padding: '0 24px', background: colorBgContainer, display: 'flex', alignItems: 'center' }}>
           {React.createElement(
             collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
             {
               className: 'trigger',
               onClick: () => setCollapsed(!collapsed),
-              style: { fontSize: 20, padding: '0 24px', cursor: 'pointer' },
+              style: { fontSize: 20, cursor: 'pointer' },
             }
           )}
           <div style={{ flex: 1, textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}>
             Agent监控系统
           </div>
+          <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+            <Space style={{ cursor: 'pointer' }}>
+              <Avatar icon={<UserOutlined />} />
+              <span>{currentUser?.username || 'User'}</span>
+            </Space>
+          </Dropdown>
         </Header>
         <Content style={{ margin: '0', overflow: 'auto' }}>
           {children}

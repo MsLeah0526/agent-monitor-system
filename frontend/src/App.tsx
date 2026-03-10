@@ -7,6 +7,18 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import AgentDetail from './pages/AgentDetail';
 import Reports from './pages/Reports';
+import Login from './pages/Login';
+import Alerts from './pages/Alerts';
+import AlertRules from './pages/AlertRules';
+import { isAuthenticated } from './services/auth';
+
+// 路由保护组件
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+};
 
 const App: React.FC = () => {
   return (
@@ -21,14 +33,29 @@ const App: React.FC = () => {
       }}
     >
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/agents/:id" element={<AgentDetail />} />
-            <Route path="/reports" element={<Reports />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          {/* 公开路由 */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* 受保护的路由 */}
+          <Route
+            path="/*"
+            element={
+              <PrivateRoute>
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/agents/:id" element={<AgentDetail />} />
+                    <Route path="/reports" element={<Reports />} />
+                    <Route path="/alerts" element={<Alerts />} />
+                    <Route path="/alert-rules" element={<AlertRules />} />
+                  </Routes>
+                </Layout>
+              </PrivateRoute>
+            }
+          />
+        </Routes>
       </Router>
     </ConfigProvider>
   );

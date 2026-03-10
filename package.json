@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
     "backend": "node backend/server.mjs",
+    "websocket": "node backend/websocket-main.js",
     "init-db": "node backend/init-database.mjs",
     "seed-db": "node backend/seed/agents.mjs",
     "sync-agents": "node backend/syncAgents.mjs sync",
@@ -20,15 +21,20 @@
   "type": "module",
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.4",
+    "axios": "^1.13.6",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "echarts": "^6.0.0",
     "express": "^5.2.1",
     "mysql2": "^3.19.0",
+    "nodemailer": "^8.0.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-echarts": "^0.1.1",
     "recharts": "^3.8.0",
-    "vite": "^7.3.1"
+    "socket.io": "^4.8.3",
+    "sqlite3": "^5.1.7",
+    "vite": "^7.3.1",
+    "ws": "^8.19.0"
   }
 }

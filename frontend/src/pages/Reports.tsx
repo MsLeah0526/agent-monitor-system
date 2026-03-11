@@ -19,8 +19,8 @@ import {
   FilePdfOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { agentApi } from '../../services/api';
-import { ReportFilter, ReportExport } from '../../types/agent';
+import { agentApi } from '../services/api';
+import { ReportFilter, ReportExport } from '../types/agent';
 import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;

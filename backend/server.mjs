@@ -13,6 +13,7 @@ import teamRouter from './routes/team.mjs';
 import alertsRouter from './routes/alerts.mjs';
 import reportsRouter from './routes/reports.mjs';
 import authRouter from './routes/auth.mjs';
+import analysisRouter from './routes/analysis.mjs';
 
 // 导入中间件
 import { authMiddleware, optionalAuthMiddleware } from './middleware/auth.mjs';
@@ -47,6 +48,7 @@ app.use('/api/communications', authMiddleware, communicationsRouter);
 app.use('/api/team', authMiddleware, teamRouter);
 app.use('/api/alerts', authMiddleware, alertsRouter);
 app.use('/api/reports', authMiddleware, reportsRouter);
+app.use('/api/analysis', authMiddleware, analysisRouter);
 
 // 根路由
 app.get('/', (req, res) => {

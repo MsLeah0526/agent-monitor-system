@@ -12,7 +12,7 @@ const Login: React.FC = () => {
 
   const API_BASE = 'http://localhost:3001/api';
 
-  const onFinish = async (values: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
+  const onFinish = async (values: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     setLoading(true);
     try {
       const response = await axios.post(`${API_BASE}/auth/login`, values);

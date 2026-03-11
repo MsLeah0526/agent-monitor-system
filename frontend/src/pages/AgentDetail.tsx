@@ -22,11 +22,11 @@ import {
   CloseOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-import { agentApi } from '../../services/api';
-import { AgentDetail } from '../../types/agent';
-import ScoreTrendChart from '../charts/ScoreTrendChart';
-import PerformanceBarChart from '../charts/PerformanceBarChart';
-import GaugeChart from '../charts/GaugeChart';
+import { agentApi } from '../services/api';
+import { AgentDetail } from '../types/agent';
+import ScoreTrendChart from '../components/charts/ScoreTrendChart';
+import PerformanceBarChart from '../components/charts/PerformanceBarChart';
+import GaugeChart from '../components/charts/GaugeChart';
 
 const AgentDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

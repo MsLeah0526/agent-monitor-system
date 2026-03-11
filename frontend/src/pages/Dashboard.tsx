@@ -9,10 +9,10 @@ import {
   SyncOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
-import { useAgents, useTeamOverview } from '../../hooks/useAgents';
-import ScoreTrendChart from '../charts/ScoreTrendChart';
-import ScoreDistributionChart from '../charts/ScoreDistributionChart';
-import { wsService } from '../../services/websocket';
+import { useAgents, useTeamOverview } from '../hooks/useAgents';
+import ScoreTrendChart from '../components/charts/ScoreTrendChart';
+import ScoreDistributionChart from '../components/charts/ScoreDistributionChart';
+import { wsService } from '../services/websocket';
 
 const Dashboard: React.FC = () => {
   const { agents, loading, refetch } = useAgents();

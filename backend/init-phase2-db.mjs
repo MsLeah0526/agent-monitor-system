@@ -57,7 +57,7 @@ async function initDatabase() {
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         type VARCHAR(100) NOT NULL,
-        condition VARCHAR(100) NOT NULL,
+        \`condition\` VARCHAR(100) NOT NULL,
         threshold DECIMAL(10, 2) NOT NULL,
         severity ENUM('low', 'medium', 'high') DEFAULT 'medium',
         enabled BOOLEAN DEFAULT TRUE,
@@ -102,7 +102,7 @@ async function initDatabase() {
     
     if (rules.length === 0) {
       await pool.query(`
-        INSERT INTO alert_rules (name, type, condition, threshold, severity, enabled, description) VALUES
+        INSERT INTO alert_rules (name, type, \`condition\`, threshold, severity, enabled, description) VALUES
         ('Agent离线告警', 'agent_offline', 'offline_duration', 300, 'high', TRUE, '当Agent离线超过5分钟时触发告警'),
         ('积分异常告警', 'score_anomaly', 'score_change', 50, 'medium', TRUE, '当积分变化超过50分时触发告警'),
         ('任务失败率告警', 'high_failure_rate', 'failure_rate', 0.5, 'high', TRUE, '当任务失败率超过50%时触发告警')

@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
     }
 
     // 构建查询条件
-    let whereClause = 'WHERE created_at >= ?';
+    let whereClause = 'WHERE start_time >= ?';
     const params = [startTime];
 
     if (agentId) {
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
     }
 
     if (type) {
-      whereClause += ' AND type = ?';
+      whereClause += ' AND task_type = ?';
       params.push(type);
     }
 
@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
         SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed,
         SUM(CASE WHEN status = 'running' THEN 1 ELSE 0 END) as running,
         AVG(CASE WHEN duration IS NOT NULL THEN duration ELSE NULL END) as avgDuration
-       FROM tasks ${whereClause}`,
+       FROM agent_tasks ${whereClause}`,
       params
     );
 
@@ -63,11 +63,11 @@ router.get('/', async (req, res) => {
     const [invocationStats] = await pool.query(
       `SELECT 
         COUNT(*) as total,
-        AVG(response_time) as avgResponseTime,
-        MIN(response_time) as minResponseTime,
-        MAX(response_time) as maxResponseTime
-       FROM invocations 
-       WHERE start_time >= ? ${agentId ? 'AND agent_id = ?' : ''}`,
+        AVG(duration) as avgResponseTime,
+        MIN(duration) as minResponseTime,
+        MAX(duration) as maxResponseTime
+       FROM agent_invocations 
+       WHERE timestamp >= ? ${agentId ? 'AND caller_id = ?' : ''}`,
       agentId ? [startTime, agentId] : [startTime]
     );
 
@@ -210,7 +210,7 @@ async function getReportData(timeRange, agentId, type) {
       startTime = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   }
 
-  let whereClause = 'WHERE created_at >= ?';
+  let whereClause = 'WHERE start_time >= ?';
   const params = [startTime];
 
   if (agentId) {
@@ -219,7 +219,7 @@ async function getReportData(timeRange, agentId, type) {
   }
 
   if (type) {
-    whereClause += ' AND type = ?';
+    whereClause += ' AND task_type = ?';
     params.push(type);
   }
 
@@ -230,18 +230,18 @@ async function getReportData(timeRange, agentId, type) {
       SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed,
       SUM(CASE WHEN status = 'running' THEN 1 ELSE 0 END) as running,
       AVG(CASE WHEN duration IS NOT NULL THEN duration ELSE NULL END) as avgDuration
-     FROM tasks ${whereClause}`,
+     FROM agent_tasks ${whereClause}`,
     params
   );
 
   const [invocationStats] = await pool.query(
     `SELECT 
       COUNT(*) as total,
-      AVG(response_time) as avgResponseTime,
-      MIN(response_time) as minResponseTime,
-      MAX(response_time) as maxResponseTime
-     FROM invocations 
-     WHERE start_time >= ? ${agentId ? 'AND agent_id = ?' : ''}`,
+      AVG(duration) as avgResponseTime,
+      MIN(duration) as minResponseTime,
+      MAX(duration) as maxResponseTime
+     FROM agent_invocations 
+     WHERE timestamp >= ? ${agentId ? 'AND caller_id = ?' : ''}`,
     agentId ? [startTime, agentId] : [startTime]
   );
 

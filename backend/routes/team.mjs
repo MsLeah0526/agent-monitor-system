@@ -26,10 +26,10 @@ router.get('/overview', async (req, res) => {
 
     // 获取任务完成率
     const [completedTasks] = await pool.query(
-      "SELECT COUNT(*) as count FROM tasks WHERE status = 'completed'"
+      "SELECT COUNT(*) as count FROM agent_tasks WHERE status = 'completed'"
     );
     const [totalTasks] = await pool.query(
-      'SELECT COUNT(*) as count FROM tasks'
+      'SELECT COUNT(*) as count FROM agent_tasks'
     );
     const completionRate = totalTasks[0].count > 0
       ? (completedTasks[0].count / totalTasks[0].count * 100).toFixed(2)
@@ -37,16 +37,16 @@ router.get('/overview', async (req, res) => {
 
     // 获取今日活跃Agent数
     const [todayActive] = await pool.query(
-      `SELECT COUNT(DISTINCT agent_id) as count 
-       FROM invocations 
-       WHERE DATE(start_time) = CURDATE()`
+      `SELECT COUNT(DISTINCT caller_id) as count 
+       FROM agent_invocations 
+       WHERE DATE(timestamp) = CURDATE()`
     );
 
     // 获取平均响应时间
     const [avgResponse] = await pool.query(
-      `SELECT AVG(response_time) as avg 
-       FROM invocations 
-       WHERE response_time IS NOT NULL`
+      `SELECT AVG(duration) as avg 
+       FROM agent_invocations 
+       WHERE duration IS NOT NULL`
     );
 
     res.json({
